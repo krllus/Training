@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:application="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fox"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fox.FoxFragment">
+
+    <TextView
+        android:id="@+id/fox_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        application:layout_constraintEnd_toEndOf="parent"
+        application:layout_constraintStart_toStartOf="parent"
+        application:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fox_image_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/fox_content_description"
+        application:layout_constraintBottom_toTopOf="@+id/button_random"
+        application:layout_constraintEnd_toEndOf="parent"
+        application:layout_constraintHorizontal_bias="0.498"
+        application:layout_constraintStart_toStartOf="parent"
+        application:layout_constraintTop_toBottomOf="@+id/fox_label" />
+
+    <Button
+        android:id="@+id/button_previous"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/button_previous"
+        application:layout_constraintBottom_toBottomOf="parent"
+        application:layout_constraintEnd_toStartOf="@+id/button_random"
+        application:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_random"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/button_random"
+        application:layout_constraintBottom_toBottomOf="parent"
+        application:layout_constraintEnd_toStartOf="@+id/button_next"
+        application:layout_constraintStart_toEndOf="@+id/button_previous" />
+
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/button_next"
+        application:layout_constraintBottom_toBottomOf="parent"
+        application:layout_constraintEnd_toEndOf="parent"
+        application:layout_constraintStart_toEndOf="@+id/button_random" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

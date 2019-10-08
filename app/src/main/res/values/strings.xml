@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Training</string>
+    <string name="fox_content_description">Image of a fox</string>
+
+    <string name="button_next">Next</string>
+    <string name="button_previous">Previous</string>
+    <string name="button_random">Random</string>
+</resources>
