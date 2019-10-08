@@ -8,8 +8,6 @@ import dagger.android.AndroidInjector
 import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 
-
-
 @Module(subcomponents = [MainActivitySubComponent::class])
 internal abstract class MainActivityModule {
     @Binds

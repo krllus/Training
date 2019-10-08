@@ -14,7 +14,9 @@ import javax.inject.Singleton
 
 
 @Module
-class NetworkModule(private val baseUrl: String) {
+class NetworkModule {
+
+    private val baseUrl: String = "http://randomfox.ca/"
 
     @Provides
     @Singleton

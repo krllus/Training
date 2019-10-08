@@ -1,18 +1,12 @@
 package com.github.krllus.training.dagger
 
+import com.github.krllus.training.AppExecutors
 import com.github.krllus.training.data.FoxDao
 import com.github.krllus.training.data.FoxRepository
 import com.github.krllus.training.domain.service.FoxWebService
-import com.github.krllus.training.ui.fox.FoxFragment
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.Subcomponent
-import dagger.android.AndroidInjector
-import dagger.multibindings.ClassKey
-import dagger.multibindings.IntoMap
 import retrofit2.Retrofit
-import java.util.concurrent.Executor
 import javax.inject.Singleton
 
 @Module
@@ -28,10 +22,10 @@ class FoxModule {
     @Provides
     fun provideFoxRepository(
         webService: FoxWebService,
-        executor: Executor,
+        appExecutors: AppExecutors,
         foxDao: FoxDao
     ): FoxRepository {
-        return FoxRepository(webService, executor, foxDao)
+        return FoxRepository(webService, appExecutors, foxDao)
     }
 
     @Provides

@@ -1,6 +1,5 @@
 package com.github.krllus.training.ui.fox
 
-
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,12 +13,24 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import coil.api.load
 import com.github.krllus.training.R
-import com.github.krllus.training.ui.common.NavigationController
+import com.github.krllus.training.dagger.FoxModule
+import com.github.krllus.training.dagger.NetworkModule
 import com.github.krllus.training.viewmodels.FoxViewModel
 import com.github.krllus.training.viewmodels.FoxViewModelFactory
+import dagger.android.AndroidInjector
+import dagger.android.HasAndroidInjector
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
-class FoxFragment : Fragment() {
+class FoxFragment : Fragment(), HasAndroidInjector {
+
+    override fun androidInjector(): AndroidInjector<Any> {
+        return DaggerFoxComponent.builder()
+            .fragment(this)
+            .foxModule(FoxModule())
+            .netModule(NetworkModule())
+            .build()
+    }
 
     companion object {
         const val FOX_ID = "foxId"
@@ -46,7 +57,7 @@ class FoxFragment : Fragment() {
     private lateinit var btnNext: Button
 
     override fun onAttach(context: Context) {
-        inject()
+        AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
 
@@ -81,7 +92,6 @@ class FoxFragment : Fragment() {
                 }
             }
     }
-
 
 }
 

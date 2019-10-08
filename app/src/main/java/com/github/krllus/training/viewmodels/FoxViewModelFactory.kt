@@ -2,24 +2,20 @@ package com.github.krllus.training.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.github.krllus.training.data.FoxRepository
 import javax.inject.Inject
-import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
 class FoxViewModelFactory @Inject constructor(
-    private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
+    private val foxRepository: FoxRepository
 ) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        val creator = creators[modelClass] ?: creators.entries.firstOrNull {
-            modelClass.isAssignableFrom(it.key)
-        }?.value ?: throw IllegalArgumentException("unknown model class $modelClass")
-        try {
-            @Suppress("UNCHECKED_CAST")
-            return creator.get() as T
-        } catch (e: Exception) {
-            throw RuntimeException(e)
-        }
 
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        require(modelClass == FoxViewModel::class) { "unknown viewmodel class" }
+        return FoxViewModel(
+            foxRepository
+        ) as T
     }
 }
