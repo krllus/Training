@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import coil.api.load
 import com.github.krllus.training.R
-import com.github.krllus.training.dagger.inject
 import com.github.krllus.training.ui.common.NavigationController
 import com.github.krllus.training.viewmodels.FoxViewModel
 import com.github.krllus.training.viewmodels.FoxViewModelFactory
@@ -33,9 +32,6 @@ class FoxFragment : Fragment() {
     }
 
     @Inject
-    lateinit var navigationController: NavigationController
-
-    @Inject
     internal lateinit var foxViewModelFactory: FoxViewModelFactory
 
     private lateinit var foxViewModel: FoxViewModel
@@ -50,6 +46,7 @@ class FoxFragment : Fragment() {
     private lateinit var btnNext: Button
 
     override fun onAttach(context: Context) {
+        inject()
         super.onAttach(context)
     }
 
