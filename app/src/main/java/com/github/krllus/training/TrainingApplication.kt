@@ -1,12 +1,11 @@
 package com.github.krllus.training
 
 import android.app.Application
-import com.github.krllus.training.dagger.DaggerAppComponent
+import com.github.krllus.training.dagger.AppInjector
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
-
 
 class TrainingApplication : Application(), HasAndroidInjector {
 
@@ -16,9 +15,7 @@ class TrainingApplication : Application(), HasAndroidInjector {
     override fun onCreate() {
         super.onCreate()
 
-        DaggerAppComponent.builder()
-            .build()
-            .inject(this)
+        AppInjector.init(this)
     }
 
     override fun androidInjector(): AndroidInjector<Any> {

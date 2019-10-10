@@ -9,12 +9,8 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [ViewModelModule::class])
 class AppModule {
-
-    @Singleton
-    @Provides
-    fun providesApplication(application: Application): Application = application
 
     @Singleton
     @Provides

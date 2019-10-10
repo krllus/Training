@@ -13,10 +13,4 @@ interface FoxDao {
 
     @Query("SELECT * FROM fox WHERE id = :foxId")
     fun load(foxId: String): LiveData<Fox>
-
-
-    fun hasFox(foxId: String): Boolean {
-        val fox = load(foxId)
-        return fox.value != null
-    }
 }

@@ -19,11 +19,8 @@ class FoxRepository @Inject constructor(
 
     private fun refreshFox(foxId: String) {
         appExecutors.networkIO().execute {
-            val foxExists = foxDao.hasFox(foxId)
-            if (!foxExists) {
-                val response = webService.getFox(foxId).execute()
-                foxDao.save(response.body()!!)
-            }
+            val response = webService.getFox(foxId).execute()
+            foxDao.save(response.body()!!)
         }
     }
 }

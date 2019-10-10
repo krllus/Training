@@ -9,28 +9,15 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import coil.api.load
 import com.github.krllus.training.R
-import com.github.krllus.training.dagger.FoxModule
-import com.github.krllus.training.dagger.NetworkModule
+import com.github.krllus.training.dagger.Injectable
 import com.github.krllus.training.viewmodels.FoxViewModel
-import com.github.krllus.training.viewmodels.FoxViewModelFactory
-import dagger.android.AndroidInjector
-import dagger.android.HasAndroidInjector
-import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
-class FoxFragment : Fragment(), HasAndroidInjector {
-
-    override fun androidInjector(): AndroidInjector<Any> {
-        return DaggerFoxComponent.builder()
-            .fragment(this)
-            .foxModule(FoxModule())
-            .netModule(NetworkModule())
-            .build()
-    }
+class FoxFragment : Fragment(), Injectable {
 
     companion object {
         const val FOX_ID = "foxId"
@@ -43,9 +30,13 @@ class FoxFragment : Fragment(), HasAndroidInjector {
     }
 
     @Inject
-    internal lateinit var foxViewModelFactory: FoxViewModelFactory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var foxViewModel: FoxViewModel
+    private val foxViewModel: FoxViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)
+            .get(FoxViewModel::class.java)
+    }
+
     private val retrievedFoxId: String by lazy {
         arguments?.getString(FOX_ID) ?: "1"
     }
@@ -57,7 +48,7 @@ class FoxFragment : Fragment(), HasAndroidInjector {
     private lateinit var btnNext: Button
 
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
+        inject()
         super.onAttach(context)
     }
 
@@ -79,18 +70,15 @@ class FoxFragment : Fragment(), HasAndroidInjector {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        foxViewModel = ViewModelProviders
-            .of(this, foxViewModelFactory)
-            .get(FoxViewModel::class.java)
-            .apply {
-                fox.observe(viewLifecycleOwner) {
-                    setFoxId(retrievedFoxId)
-                    imgFox.load(it.image) {
-                        crossfade(true)
-                        placeholder(R.drawable.placeholder_fox)
-                    }
+        foxViewModel.apply {
+            setFoxId(retrievedFoxId)
+            fox.observe(viewLifecycleOwner) {
+                imgFox.load(it.image) {
+                    crossfade(true)
+                    placeholder(R.drawable.placeholder_fox)
                 }
             }
+        }
     }
 
 }

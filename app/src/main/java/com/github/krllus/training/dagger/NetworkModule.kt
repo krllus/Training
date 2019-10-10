@@ -16,8 +16,6 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    private val baseUrl: String = "http://randomfox.ca/"
-
     @Provides
     @Singleton
     fun provideHttpCache(context: Context): Cache {
@@ -42,10 +40,10 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient, serverUrl: String): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl(baseUrl)
+            .baseUrl(serverUrl)
             .client(okHttpClient)
             .build()
     }
