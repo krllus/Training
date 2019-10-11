@@ -19,8 +19,12 @@ class FoxRepository @Inject constructor(
 
     private fun refreshFox(foxId: String) {
         appExecutors.networkIO().execute {
-            val response = webService.getFox(foxId).execute()
-            foxDao.save(response.body()!!)
+            val response = webService.getRandomFox().execute()
+
+            val fox = response.body() as Fox
+            val clone = fox.copy(id = foxId, image = fox.image, link = fox.link)
+
+            foxDao.save(clone)
         }
     }
 }
