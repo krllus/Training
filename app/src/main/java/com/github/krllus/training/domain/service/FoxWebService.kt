@@ -10,6 +10,6 @@ interface FoxWebService {
     @GET
     fun getFox(@Query("i") foxId: String): Call<Fox>
 
-    @GET("floof")
+    @GET("floof/")
     fun getRandomFox(): Call<Fox>
 }

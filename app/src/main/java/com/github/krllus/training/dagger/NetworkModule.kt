@@ -8,23 +8,19 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
 import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
-
 
 @Module
 class NetworkModule {
 
     @Provides
-    @Singleton
+    @GlobalScope
     fun provideHttpCache(context: Context): Cache {
         val cacheSize = 10 * 1024 * 1024
         return Cache(context.cacheDir, cacheSize.toLong())
     }
 
     @Provides
-    @Singleton
+    @GlobalScope
     fun provideGSON(): Gson {
         val gsonBuilder = GsonBuilder()
         gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -32,19 +28,11 @@ class NetworkModule {
     }
 
     @Provides
-    @Singleton
+    @GlobalScope
     fun provideOkHttpClient(cache: Cache): OkHttpClient {
         val client = OkHttpClient.Builder()
         client.cache(cache)
         return client.build()
     }
 
-    @Provides
-    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient, serverUrl: String): Retrofit {
-        return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl(serverUrl)
-            .client(okHttpClient)
-            .build()
-    }
 }

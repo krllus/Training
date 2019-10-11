@@ -1,24 +1,22 @@
 package com.github.krllus.training
 
 import android.app.Application
-import com.github.krllus.training.dagger.AppInjector
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import javax.inject.Inject
+import com.github.krllus.training.dagger.AppComponent
+import com.github.krllus.training.dagger.DaggerAppComponent
 
-class TrainingApplication : Application(), HasAndroidInjector {
+class TrainingApplication : Application() {
 
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
+    companion object {
+        lateinit var appComponent: AppComponent
+    }
 
     override fun onCreate() {
         super.onCreate()
 
-        AppInjector.init(this)
-    }
+        appComponent = DaggerAppComponent.builder()
+            .application(this)
+            .build()
 
-    override fun androidInjector(): AndroidInjector<Any> {
-        return dispatchingAndroidInjector
+        appComponent.inject(this)
     }
 }
